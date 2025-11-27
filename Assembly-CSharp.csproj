@@ -64,6 +64,7 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\AnimateHandOninput.cs" />
     <Compile Include="Assets\inputTest.cs" />
+    <Compile Include="Assets\Scripts\ColourBlindModeController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
