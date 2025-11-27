@@ -2,49 +2,46 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+[RequireComponent(typeof(Volume))]
 public class ColourBlindModeController : MonoBehaviour
 {
-    private Volume volume;
     private ColorAdjustments colorAdjustments;
 
     public enum CvdMode
     {
         Normal = 0,
-        Desaturate = 1,
-        BlueTint = 2
+        Protanopia = 1,
+        Deuteranopia = 2,
+        Tritanopia = 3
     }
 
     public CvdMode mode = CvdMode.Normal;
 
     void Start()
     {
-        // Try to get a Volume on THIS object first
-        volume = GetComponent<Volume>();
-
-        // If this object doesn't have one, just grab ANY Volume in the scene
-        if (volume == null)
-        {
-            volume = FindObjectOfType<Volume>();
-        }
+        var volume = GetComponent<Volume>();
 
         if (volume == null)
         {
-            Debug.LogError("ColourBlindModeController: No Volume found in the scene.");
+            Debug.LogError("CBC: No Volume component found on this GameObject.");
             return;
         }
 
         if (!volume.profile.TryGet(out colorAdjustments))
         {
-            Debug.LogError("ColourBlindModeController: No ColorAdjustments override found on the Volume profile.");
+            Debug.LogError("CBC: No ColorAdjustments override found on the Volume profile.");
             return;
         }
 
+        Debug.Log("CBC: ColorAdjustments found, script is ready.");
         ApplyMode();
     }
 
     void Update()
     {
-        // Keyboard test controls for now
+        if (colorAdjustments == null) return;
+
+        // TEMP: keyboard controls for testing
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             mode = CvdMode.Normal;
@@ -52,12 +49,17 @@ public class ColourBlindModeController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            mode = CvdMode.Desaturate;
+            mode = CvdMode.Protanopia;
             ApplyMode();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            mode = CvdMode.BlueTint;
+            mode = CvdMode.Deuteranopia;
+            ApplyMode();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            mode = CvdMode.Tritanopia;
             ApplyMode();
         }
     }
@@ -73,20 +75,34 @@ public class ColourBlindModeController : MonoBehaviour
                 colorAdjustments.contrast.value = 0f;
                 colorAdjustments.saturation.value = 0f;
                 colorAdjustments.colorFilter.value = Color.white;
+                Debug.Log("CBC: Normal mode applied.");
                 break;
 
-            case CvdMode.Desaturate:
+            case CvdMode.Protanopia:
+                // Rough protanopia-ish: reduce reds, a bit desaturated + cyan tint
                 colorAdjustments.postExposure.value = 0f;
                 colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = -80f;
-                colorAdjustments.colorFilter.value = Color.white;
+                colorAdjustments.saturation.value = -40f;
+                colorAdjustments.colorFilter.value = new Color(0.7f, 1.0f, 1.0f);
+                Debug.Log("CBC: Protanopia mode applied.");
                 break;
 
-            case CvdMode.BlueTint:
+            case CvdMode.Deuteranopia:
+                // Rough deuteranopia-ish: reduce greens, slightly magenta-ish tint
                 colorAdjustments.postExposure.value = 0f;
                 colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = -20f;
-                colorAdjustments.colorFilter.value = new Color(0.8f, 0.9f, 1f);
+                colorAdjustments.saturation.value = -40f;
+                colorAdjustments.colorFilter.value = new Color(1.0f, 0.8f, 1.0f);
+                Debug.Log("CBC: Deuteranopia mode applied.");
+                break;
+
+            case CvdMode.Tritanopia:
+                // Rough tritanopia-ish: reduce blues, more yellow tint
+                colorAdjustments.postExposure.value = 0f;
+                colorAdjustments.contrast.value = 0f;
+                colorAdjustments.saturation.value = -50f;
+                colorAdjustments.colorFilter.value = new Color(1.0f, 1.0f, 0.7f);
+                Debug.Log("CBC: Tritanopia mode applied.");
                 break;
         }
     }
