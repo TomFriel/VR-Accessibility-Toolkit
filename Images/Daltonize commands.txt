@@ -1,0 +1,4 @@
+PS C:\Users\tomfr\OneDrive - Atlantic TU\Documents\VRToolKit\URPToolkit\My project\VR-Accessibility-Toolkit\Images> python -m daltonize.daltonize -d -t t umbrellas.jpeg umbrellas_tritan_fix.png
+PS C:\Users\tomfr\OneDrive - Atlantic TU\Documents\VRToolKit\URPToolkit\My project\VR-Accessibility-Toolkit\Images> python -m daltonize.daltonize -d -t d umbrellas.jpeg umbrellas_deuter_fix.png
+PS C:\Users\tomfr\OneDrive - Atlantic TU\Documents\VRToolKit\URPToolkit\My project\VR-Accessibility-Toolkit\Images> python -m daltonize.daltonize -d -t p umbrellas.jpeg umbrellas_protan_fix.png
+PS C:\Users\tomfr\OneDrive - Atlantic TU\Documents\VRToolKit\URPToolkit\My project\VR-Accessibility-Toolkit\Images>

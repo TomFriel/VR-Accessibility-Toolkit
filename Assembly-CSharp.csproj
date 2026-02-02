@@ -62,12 +62,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AccessibilityManager.cs" />
     <Compile Include="Assets\TeleportationActivator.cs" />
+    <Compile Include="Assets\Scripts\DisableOcclusionMesh.cs" />
     <Compile Include="Assets\Scripts\AccessibilityPoster.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\AnimateHandOninput.cs" />
     <Compile Include="Assets\Scripts\ColourBlindModeController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\ColorBlindrURP_Fullscreen.shader" />
+    <None Include="Assets\Shaders\ColorBlindr.shader" />
     <None Include="Assets\Picture_Frames_FREE\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
