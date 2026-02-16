@@ -1,0 +1,109 @@
+﻿// Assets/Shaders/ColorBlindrMath.hlsl
+// Ported from ColorBlindr.shader (built-in pipeline) into Shader Graph custom function form.
+
+#ifndef COLORBLINDR_MATH_INCLUDED
+#define COLORBLINDR_MATH_INCLUDED
+
+// Precomputed constants to avoid repeated divisions
+static const float INV_16448_25098 = 1.0 / 16448.25098;
+static const float INV_128_498039  = 1.0 / 128.498039;
+
+// Note: kept pow-based conversions for quality; reduced redundant operations around them.
+float3 rgb2lin(float3 c) { return (0.992052 * pow(c, 2.2) + 0.003974) * 128.498039; }
+float3 lin2rgb(float3 c) { return pow(c, 0.45454545); }
+
+float3 rgFilter(float3 color, float k1, float k2, float k3, float strength)
+{
+    // clamp inputs once
+    color = saturate(color);
+    strength = saturate(strength);
+
+    float3 c_lin = rgb2lin(color);
+
+    // use precomputed reciprocals instead of divisions
+    float r_blind = (k1 * c_lin.r + k2 * c_lin.g) * INV_16448_25098;
+    float b_blind = (k3 * c_lin.r - k3 * c_lin.g + 128.498039 * c_lin.b) * INV_16448_25098;
+
+    // pack and clamp together
+    float3 blind = saturate(float3(r_blind, r_blind, b_blind));
+
+    float3 sim = lin2rgb(blind);
+    return lerp(color, sim, strength);
+}
+
+float3 tritanFilter(float3 color, float strength)
+{
+    color = saturate(color);
+    strength = saturate(strength);
+
+    // Anchor values
+    float anchor_e0 = 0.05059983 + 0.08585369 + 0.00952420;
+    float anchor_e1 = 0.01893033 + 0.08925308 + 0.01370054;
+    float anchor_e2 = 0.00292202 + 0.00975732 + 0.07145979;
+    float inflection = anchor_e1 / anchor_e0;
+
+    float a1 = -anchor_e2 * 0.007009;
+    float b1 =  anchor_e2 * 0.0914;
+    float c1 =  anchor_e0 * 0.007009 - anchor_e1 * 0.0914;
+    float a2 =  anchor_e1 * 0.3636 - anchor_e2 * 0.2237;
+    float b2 =  anchor_e2 * 0.1284 - anchor_e0 * 0.3636;
+    float c2 =  anchor_e0 * 0.2237 - anchor_e1 * 0.1284;
+
+    float3 c_lin = rgb2lin(color);
+
+    // compute LMS and normalize by precomputed reciprocal
+    float L = (c_lin.r * 0.05059983 + c_lin.g * 0.08585369 + c_lin.b * 0.00952420) * INV_128_498039;
+    float M = (c_lin.r * 0.01893033 + c_lin.g * 0.08925308 + c_lin.b * 0.01370054) * INV_128_498039;
+    float S = (c_lin.r * 0.00292202 + c_lin.g * 0.00975732 + c_lin.b * 0.07145979) * INV_128_498039;
+
+    // avoid division by zero
+    float tmp = M / max(L, 1e-6);
+
+    if (tmp < inflection)
+        S = -(a1 * L + b1 * M) / c1;
+    else
+        S = -(a2 * L + b2 * M) / c2;
+
+    // combine to RGB simulation using the linear LMS -> RGB transform
+    float r =  L * 30.830854 - M * 29.832659 + S *  1.610474;
+    float g = -L *  6.481468 + M * 17.715578 - S *  2.532642;
+    float b = -L *  0.375690 - M *  1.199062 + S * 14.273846;
+
+    float3 sim = lin2rgb(saturate(float3(r, g, b)));
+    return lerp(color, sim, strength);
+}
+
+// Shader Graph Custom Function wrapper.
+// IMPORTANT: node name should be "ColourBlindApply" (NO _float)
+// Shader Graph will call: ColourBlindApply_float(...)
+void ColourBlindApply_float(float3 In, float Mode, float Strength, out float3 Out)
+{
+    // Mode mapping:
+    // 0 = Normal, 1 = Deuteranopia, 2 = Protanopia, 3 = Tritanopia
+    float m = round(Mode);
+
+    float s = saturate(Strength);
+
+    if (m < 0.5)
+    {
+        Out = In;
+        return;
+    }
+    else if (m < 1.5)
+    {
+        Out = rgFilter(In, 37.611765, 90.87451, -2.862745, s);
+        return;
+    }
+    else if (m < 2.5)
+    {
+        Out = rgFilter(In, 14.443137, 114.054902, 0.513725, s);
+        return;
+    }
+    else
+    {
+        Out = tritanFilter(In, s);
+        return;
+    }
+}
+
+#endif
