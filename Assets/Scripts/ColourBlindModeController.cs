@@ -1,28 +1,15 @@
+using System;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 /// <summary>
-/// Controls the scene-wide colour adjustments to roughly simulate
-/// different types of colour vision deficiency (CVD).
-/// This script expects a Volume with a ColorAdjustments override.
+/// Controls global colour-blind simulation using a URP Full Screen Pass material.
+/// This replaces the old Volume ColorAdjustments "fake filter" approach.
 /// </summary>
-[RequireComponent(typeof(Volume))]
 public class ColourBlindModeController : MonoBehaviour
 {
-    // Reference to the ColorAdjustments override inside the Volume profile.
-    private ColorAdjustments colorAdjustments;
-
     /// <summary>
-    /// Static property so other scripts (like AccessibilityPoster)
-    /// can read what mode is currently active without needing a direct reference.
-    /// </summary>
-    public static CvdMode CurrentMode { get; private set; }
-
-    /// <summary>
-    /// Enum of the supported CVD modes.
-    /// It's defined INSIDE this class, so other scripts must refer to it as:
-    /// ColourBlindModeController.CvdMode
+    /// The supported CVD modes. Matches shader _Mode:
+    /// 0 = Normal, 1 = Protanopia, 2 = Deuteranopia, 3 = Tritanopia
     /// </summary>
     public enum CvdMode
     {
@@ -33,115 +20,81 @@ public class ColourBlindModeController : MonoBehaviour
     }
 
     /// <summary>
-    /// The mode currently selected in the Inspector.
-    /// This is also updated at runtime via keyboard input.
+    /// Other scripts can read this without needing a reference.
+    /// (Example: posters deciding which fixed material to show.)
     /// </summary>
+    public static CvdMode CurrentMode { get; private set; } = CvdMode.Normal;
+
+    [Header("Current CVD Mode")]
     public CvdMode mode = CvdMode.Normal;
+
+    [Header("Fullscreen CVD Material (used by URP Full Screen Pass)")]
+    [Tooltip("Drag Mat_CVD_Fullscreen here (material using CVD/ColorBlindrURP_Fullscreen).")]
+    public Material cvdFullscreenMaterial;
+
+    [Header("Simulation Strength")]
+    [Range(0f, 1f)]
+    public float strength = 1f;
+
+    // Shader property IDs (faster + avoids typos)
+    private static readonly int ModeId = Shader.PropertyToID("_Mode");
+    private static readonly int StrengthId = Shader.PropertyToID("_Strength");
+
+    /// <summary>
+    /// Fired when the mode changes so managers (Apply Fix) can update posters immediately.
+    /// </summary>
+    public event Action<CvdMode> OnModeChanged;
 
     private void Start()
     {
-        // Get the Volume component on the same GameObject.
-        var volume = GetComponent<Volume>();
-
-        if (volume == null)
-        {
-            Debug.LogError("CBC: No Volume component found on this GameObject.");
-            return;
-        }
-
-        // Try to get a ColorAdjustments override from the Volume profile.
-        if (!volume.profile.TryGet(out colorAdjustments))
-        {
-            Debug.LogError("CBC: No ColorAdjustments override found on the Volume profile.");
-            return;
-        }
-
-        Debug.Log("CBC: ColorAdjustments found, script is ready.");
-
-        // Apply the initial mode set in the Inspector.
-        ApplyMode();
+        // Set initial state
+        ApplyMode(forceEvent: true);
     }
 
     private void Update()
     {
-        // If we don't have ColorAdjustments, do nothing.
-        if (colorAdjustments == null) return;
+        // TEMP: keyboard input for Editor testing.
+        // Later: hook to VR UI button events.
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetMode(CvdMode.Normal);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) SetMode(CvdMode.Protanopia);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) SetMode(CvdMode.Deuteranopia);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) SetMode(CvdMode.Tritanopia);
 
-        // TEMP: keyboard input for testing in the Editor.
-        // Later you can hook these to VR UI buttons or controller input.
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // If you tweak strength live in Inspector, keep shader updated
+        if (cvdFullscreenMaterial != null)
         {
-            mode = CvdMode.Normal;
-            ApplyMode();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            mode = CvdMode.Protanopia;
-            ApplyMode();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            mode = CvdMode.Deuteranopia;
-            ApplyMode();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            mode = CvdMode.Tritanopia;
-            ApplyMode();
+            cvdFullscreenMaterial.SetFloat(StrengthId, strength);
         }
     }
 
-    /// <summary>
-    /// Applies the selected mode by adjusting the ColorAdjustments settings.
-    /// This is a rough approximation, not medically accurate simulation.
-    /// </summary>
-    private void ApplyMode()
+    public void SetMode(CvdMode newMode)
     {
-        if (colorAdjustments == null) return;
+        if (mode == newMode) return;
+        mode = newMode;
+        ApplyMode(forceEvent: true);
+    }
 
-        // Update the static mode so other scripts can read it.
+    /// <summary>
+    /// Writes mode/strength to the fullscreen material.
+    /// </summary>
+    private void ApplyMode(bool forceEvent)
+    {
         CurrentMode = mode;
 
-        switch (mode)
+        if (cvdFullscreenMaterial == null)
         {
-            case CvdMode.Normal:
-                // No special filter: reset to neutral settings.
-                colorAdjustments.postExposure.value = 0f;
-                colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = 0f;
-                colorAdjustments.colorFilter.value = Color.white;
-                Debug.Log("CBC: Normal mode applied.");
-                break;
+            Debug.LogWarning("CBC: No cvdFullscreenMaterial assigned. Drag Mat_CVD_Fullscreen onto this script.");
+            return;
+        }
 
-            case CvdMode.Protanopia:
-                // Rough Protanopia-ish look:
-                // slightly desaturated with a cyan-ish tint.
-                colorAdjustments.postExposure.value = 0f;
-                colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = -40f;
-                colorAdjustments.colorFilter.value = new Color(0.7f, 1.0f, 1.0f);
-                Debug.Log("CBC: Protanopia mode applied.");
-                break;
+        cvdFullscreenMaterial.SetFloat(ModeId, (float)mode);
+        cvdFullscreenMaterial.SetFloat(StrengthId, strength);
 
-            case CvdMode.Deuteranopia:
-                // Rough Deuteranopia-ish look:
-                // slightly desaturated with a magenta-ish tint.
-                colorAdjustments.postExposure.value = 0f;
-                colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = -40f;
-                colorAdjustments.colorFilter.value = new Color(1.0f, 0.8f, 1.0f);
-                Debug.Log("CBC: Deuteranopia mode applied.");
-                break;
+        Debug.Log($"CBC: Mode applied: {mode} (Mode={(float)mode}, Strength={strength})");
 
-            case CvdMode.Tritanopia:
-                // Rough Tritanopia-ish look:
-                // stronger desaturation with a yellowish tint.
-                colorAdjustments.postExposure.value = 0f;
-                colorAdjustments.contrast.value = 0f;
-                colorAdjustments.saturation.value = -50f;
-                colorAdjustments.colorFilter.value = new Color(1.0f, 1.0f, 0.7f);
-                Debug.Log("CBC: Tritanopia mode applied.");
-                break;
+        if (forceEvent)
+        {
+            OnModeChanged?.Invoke(mode);
         }
     }
 }
