@@ -1,46 +1,84 @@
+// Assets/Scripts/CvdModeDriver.cs
 using UnityEngine;
 
+[ExecuteAlways]
 public class CvdModeDriver : MonoBehaviour
 {
-    [Header("Material used by the URP Full Screen Pass")]
-    public Material fullscreenMat;
+    public enum CvdMode
+    {
+        Normal = 0,
+        Deuteranopia = 1,
+        Protanopia = 2,
+        Tritanopia = 3
+    }
+
+    [Header("The EXACT material used in your URP Full Screen Pass Renderer Feature")]
+    [SerializeField] private Material passMaterial;
 
     [Header("Runtime values")]
-    [Range(0, 10)] public int mode = 0;
-    [Range(0f, 1f)] public float strength = 1f;
+    [SerializeField] private CvdMode mode = CvdMode.Normal;
 
-    // These usually become "_Mode" and "_Strength" in Shader Graph materials.
-    // If yours are different, see the note below.
-    private static readonly int ModeID = Shader.PropertyToID("_Mode");
-    private static readonly int StrengthID = Shader.PropertyToID("_Strength");
+    [Range(0f, 1f)]
+    [SerializeField] private float strength = 1f;
 
-    void Start()
+    [Header("Keyboard (Editor)")]
+    [SerializeField] private bool enableKeyboard = true;
+
+    // Shader Graph property names are usually _Mode / _Strength under the hood.
+    private static readonly int ModeId = Shader.PropertyToID("_Mode");
+    private static readonly int StrengthId = Shader.PropertyToID("_Strength");
+    private static readonly int ModeAltId = Shader.PropertyToID("Mode");
+    private static readonly int StrengthAltId = Shader.PropertyToID("Strength");
+
+    private void OnEnable()
     {
-        Apply();
+        ApplyToMaterial();
     }
 
-    void Update()
+    private void OnValidate()
     {
-        // Example keyboard controls (replace later with XR input / UI)
-        if (Input.GetKeyDown(KeyCode.Alpha0)) { mode = 0; Apply(); } // normal
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { mode = 1; Apply(); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { mode = 2; Apply(); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { mode = 3; Apply(); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { mode = 4; Apply(); }
-
-        // Strength tweak (optional)
-        if (Input.GetKeyDown(KeyCode.Minus)) { strength = Mathf.Clamp01(strength - 0.1f); Apply(); }
-        if (Input.GetKeyDown(KeyCode.Equals)) { strength = Mathf.Clamp01(strength + 0.1f); Apply(); }
+        ApplyToMaterial();
     }
 
-    public void Apply()
+    private void Update()
     {
-        if (fullscreenMat == null) return;
+        if (!enableKeyboard) return;
 
-        fullscreenMat.SetFloat(ModeID, mode);
-        fullscreenMat.SetFloat(StrengthID, strength);
+        // In edit mode, Unity still calls Update with ExecuteAlways
+        // but Input only works reliably in Play Mode.
+        if (!Application.isPlaying) return;
 
-        // Helpful log while testing
-        Debug.Log($"CVD Apply -> Mode={mode}, Strength={strength}");
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetMode(CvdMode.Normal);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SetMode(CvdMode.Deuteranopia);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SetMode(CvdMode.Protanopia);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SetMode(CvdMode.Tritanopia);
+    }
+
+    public void SetMode(CvdMode newMode)
+    {
+        mode = newMode;
+        ApplyToMaterial();
+    }
+
+    public void SetStrength(float newStrength)
+    {
+        strength = Mathf.Clamp01(newStrength);
+        ApplyToMaterial();
+    }
+
+    private void ApplyToMaterial()
+    {
+        if (passMaterial == null) return;
+
+        // Important: set BOTH possible property name styles so it works regardless
+        // of how Shader Graph compiled your properties.
+        SetFloatSmart(passMaterial, ModeId, ModeAltId, (float)mode);
+        SetFloatSmart(passMaterial, StrengthId, StrengthAltId, strength);
+    }
+
+    private static void SetFloatSmart(Material mat, int idA, int idB, float value)
+    {
+        if (mat.HasProperty(idA)) mat.SetFloat(idA, value);
+        else if (mat.HasProperty(idB)) mat.SetFloat(idB, value);
     }
 }
