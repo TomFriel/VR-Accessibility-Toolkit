@@ -29,8 +29,8 @@ public class AccessibilityPoster : MonoBehaviour
         targetRenderer.material = normalMaterial;
     }
 
-    // Called by AccessibilityManager when Apply Fix is toggled
-    public void ApplyFix(bool enable)
+    // Called by AccessibilityManager when Apply Fix is toggled OR mode changes
+    public void ApplyFix(bool enable, CvdModeDriver.CvdMode mode)
     {
         if (targetRenderer == null) return;
 
@@ -38,23 +38,21 @@ public class AccessibilityPoster : MonoBehaviour
 
         if (enable)
         {
-            var mode = ColourBlindModeController.CurrentMode;
-
             switch (mode)
             {
-                case ColourBlindModeController.CvdMode.Protanopia:
+                case CvdModeDriver.CvdMode.Protanopia:
                     if (protanFixMaterial != null) chosen = protanFixMaterial;
                     break;
 
-                case ColourBlindModeController.CvdMode.Deuteranopia:
+                case CvdModeDriver.CvdMode.Deuteranopia:
                     if (deutanFixMaterial != null) chosen = deutanFixMaterial;
                     break;
 
-                case ColourBlindModeController.CvdMode.Tritanopia:
+                case CvdModeDriver.CvdMode.Tritanopia:
                     if (tritanFixMaterial != null) chosen = tritanFixMaterial;
                     break;
 
-                case ColourBlindModeController.CvdMode.Normal:
+                case CvdModeDriver.CvdMode.Normal:
                 default:
                     chosen = normalMaterial;
                     break;

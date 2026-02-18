@@ -1,12 +1,39 @@
+# Unity generated
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
-[Uu]serSettings/
 [Mm]emoryCaptures/
+[Uu]serSettings/
 [Pp]ackages/com.unity.collab-proxy/
+
+#Imports
 Assets/AllSkyFree/
 Assets/Models/
+Assets/Liminal Pools 001
 
+
+
+
+# Visual Studio / Rider / VSCode
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# Unity cache / crash
+sysinfo.txt
+
+# OS files
+.DS_Store
+Thumbs.db
