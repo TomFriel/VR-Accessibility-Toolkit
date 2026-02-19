@@ -26,14 +26,20 @@ public class ModeToastUI : MonoBehaviour
         lastMode = modeDriver != null ? modeDriver.CurrentMode : CvdModeDriver.CvdMode.Normal;
         lastFix = fixManager != null && fixManager.applyFix;
 
-        ShowText(BuildText(lastMode, lastFix));
+        // Start hidden until welcome dismissed (prevents any flash on startup)
+        if (canvasGroup != null) canvasGroup.alpha = 0f;
     }
+
 
     void Update()
     {
+        // NEW: Don't show mode/fix toast until the welcome message is dismissed
+        if (!WelcomeToastOnce.WelcomeDismissed) return;
+
         var mode = modeDriver != null ? modeDriver.CurrentMode : CvdModeDriver.CvdMode.Normal;
         var fix = fixManager != null && fixManager.applyFix;
 
+        // If either changes, show toast again
         if (mode != lastMode || fix != lastFix)
         {
             lastMode = mode;
@@ -41,6 +47,7 @@ public class ModeToastUI : MonoBehaviour
             ShowText(BuildText(mode, fix));
         }
 
+        // Countdown + fade
         if (timer > 0f)
         {
             timer -= Time.deltaTime;
@@ -61,6 +68,7 @@ public class ModeToastUI : MonoBehaviour
     {
         if (label != null) label.text = text;
         timer = showSeconds;
+
         if (canvasGroup != null) canvasGroup.alpha = 1f;
     }
 
