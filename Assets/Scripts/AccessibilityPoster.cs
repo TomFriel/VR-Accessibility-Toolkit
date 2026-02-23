@@ -1,17 +1,42 @@
 using UnityEngine;
 
+/*
+PSEUDOCODE (clear overview)
+--------------------------
+- Hold references to:
+    - MeshRenderer to update
+    - Normal material (original)
+    - Fix materials per CVD mode (Protan/Deutan/Tritan)
+    - Fix+ materials per CVD mode (Protan/Deutan/Tritan)
+- On Awake:
+    - auto-find MeshRenderer if missing
+    - cache current shared material as normalMaterial if missing
+    - apply normalMaterial as the starting state
+- ApplyFixState(fixOn, fixPlusOn, mode):
+    - If Fix is OFF: use normalMaterial
+    - If Fix is ON and Fix+ is OFF: use Fix material for that mode (fallback to normal)
+    - If Fix is ON and Fix+ is ON: use Fix+ material for that mode (fallback to Fix, then normal)
+*/
+
 public class AccessibilityPoster : MonoBehaviour
 {
     [Header("Renderer")]
-    public MeshRenderer targetRenderer;
+    public MeshRenderer targetRenderer; // Renderer that receives material swaps.
 
-    [Header("Materials")]
-    public Material normalMaterial;          // original
-    public Material protanFixMaterial;       // daltonized for Protan
-    public Material deutanFixMaterial;       // daltonized for Deutan
-    public Material tritanFixMaterial;       // daltonized for Tritan
+    [Header("Normal (original)")]
+    public Material normalMaterial; // Original poster material.
 
-    private void Awake()
+    [Header("Fix (algorithmic) materials")]
+    public Material protanFixMaterial;
+    public Material deutanFixMaterial;
+    public Material tritanFixMaterial;
+
+    [Header("Fix+ (manual enhanced) materials")]
+    public Material protanFixPlusMaterial;
+    public Material deutanFixPlusMaterial;
+    public Material tritanFixPlusMaterial;
+
+    private void Awake() // Ensures renderer/material references exist and applies the normal material.
     {
         if (targetRenderer == null)
             targetRenderer = GetComponent<MeshRenderer>();
@@ -22,41 +47,34 @@ public class AccessibilityPoster : MonoBehaviour
             return;
         }
 
-        // Start with original material
         if (normalMaterial == null)
             normalMaterial = targetRenderer.sharedMaterial;
 
         targetRenderer.material = normalMaterial;
     }
 
-    // Called by AccessibilityManager when Apply Fix is toggled OR mode changes
-    public void ApplyFix(bool enable, CvdModeDriver.CvdMode mode)
+    public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode) // Applies correct material for OFF/FIX/FIX+.
     {
         if (targetRenderer == null) return;
 
         Material chosen = normalMaterial;
 
-        if (enable)
+        if (!fixOn)
         {
-            switch (mode)
-            {
-                case CvdModeDriver.CvdMode.Protanopia:
-                    if (protanFixMaterial != null) chosen = protanFixMaterial;
-                    break;
-
-                case CvdModeDriver.CvdMode.Deuteranopia:
-                    if (deutanFixMaterial != null) chosen = deutanFixMaterial;
-                    break;
-
-                case CvdModeDriver.CvdMode.Tritanopia:
-                    if (tritanFixMaterial != null) chosen = tritanFixMaterial;
-                    break;
-
-                case CvdModeDriver.CvdMode.Normal:
-                default:
-                    chosen = normalMaterial;
-                    break;
-            }
+            // OFF
+            chosen = normalMaterial;
+        }
+        else if (fixOn && !fixPlusOn)
+        {
+            // FIX
+            chosen = GetFixMaterialForMode(mode) ?? normalMaterial;
+        }
+        else
+        {
+            // FIX+
+            chosen = GetFixPlusMaterialForMode(mode)
+                     ?? GetFixMaterialForMode(mode)
+                     ?? normalMaterial;
         }
 
         if (chosen == null)
@@ -66,5 +84,35 @@ public class AccessibilityPoster : MonoBehaviour
         }
 
         targetRenderer.material = chosen;
+    }
+
+    private Material GetFixMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX material for current mode (or null).
+    {
+        switch (mode)
+        {
+            case CvdModeDriver.CvdMode.Protanopia:
+                return protanFixMaterial;
+            case CvdModeDriver.CvdMode.Deuteranopia:
+                return deutanFixMaterial;
+            case CvdModeDriver.CvdMode.Tritanopia:
+                return tritanFixMaterial;
+            default:
+                return null;
+        }
+    }
+
+    private Material GetFixPlusMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX+ material for current mode (or null).
+    {
+        switch (mode)
+        {
+            case CvdModeDriver.CvdMode.Protanopia:
+                return protanFixPlusMaterial;
+            case CvdModeDriver.CvdMode.Deuteranopia:
+                return deutanFixPlusMaterial;
+            case CvdModeDriver.CvdMode.Tritanopia:
+                return tritanFixPlusMaterial;
+            default:
+                return null;
+        }
     }
 }

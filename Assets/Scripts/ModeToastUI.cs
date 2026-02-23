@@ -1,6 +1,16 @@
 using UnityEngine;
 using TMPro;
 
+/*
+PSEUDOCODE (clear overview)
+--------------------------
+- Wait until the welcome popup is dismissed before showing any toasts.
+- Show toast with:
+    - current CVD simulation mode
+    - Apply Fix state (OFF / FIX / FIX+)
+- Fade toast out after a short duration.
+*/
+
 public class ModeToastUI : MonoBehaviour
 {
     [Header("References")]
@@ -15,9 +25,10 @@ public class ModeToastUI : MonoBehaviour
 
     CvdModeDriver.CvdMode lastMode;
     bool lastFix;
+    bool lastFixPlus;
     float timer;
 
-    void Start()
+    void Start() // Finds references and hides toast at startup.
     {
         if (modeDriver == null) modeDriver = FindFirstObjectByType<CvdModeDriver>();
         if (fixManager == null) fixManager = FindFirstObjectByType<AccessibilityManager>();
@@ -25,29 +36,27 @@ public class ModeToastUI : MonoBehaviour
 
         lastMode = modeDriver != null ? modeDriver.CurrentMode : CvdModeDriver.CvdMode.Normal;
         lastFix = fixManager != null && fixManager.applyFix;
+        lastFixPlus = fixManager != null && fixManager.applyFixPlus;
 
-        // Start hidden until welcome dismissed (prevents any flash on startup)
         if (canvasGroup != null) canvasGroup.alpha = 0f;
     }
 
-
-    void Update()
+    void Update() // Waits for welcome dismissal, then shows/updates and fades the toast.
     {
-        // NEW: Don't show mode/fix toast until the welcome message is dismissed
         if (!WelcomeToastOnce.WelcomeDismissed) return;
 
         var mode = modeDriver != null ? modeDriver.CurrentMode : CvdModeDriver.CvdMode.Normal;
         var fix = fixManager != null && fixManager.applyFix;
+        var fixPlus = fixManager != null && fixManager.applyFixPlus;
 
-        // If either changes, show toast again
-        if (mode != lastMode || fix != lastFix)
+        if (mode != lastMode || fix != lastFix || fixPlus != lastFixPlus)
         {
             lastMode = mode;
             lastFix = fix;
-            ShowText(BuildText(mode, fix));
+            lastFixPlus = fixPlus;
+            ShowText(BuildText(mode, fix, fixPlus));
         }
 
-        // Countdown + fade
         if (timer > 0f)
         {
             timer -= Time.deltaTime;
@@ -64,15 +73,14 @@ public class ModeToastUI : MonoBehaviour
         }
     }
 
-    void ShowText(string text)
+    void ShowText(string text) // Sets toast text and restarts timer.
     {
         if (label != null) label.text = text;
         timer = showSeconds;
-
         if (canvasGroup != null) canvasGroup.alpha = 1f;
     }
 
-    string BuildText(CvdModeDriver.CvdMode mode, bool fixOn)
+    string BuildText(CvdModeDriver.CvdMode mode, bool fix, bool fixPlus) // Builds user-facing toast text.
     {
         string modeName = mode switch
         {
@@ -82,7 +90,11 @@ public class ModeToastUI : MonoBehaviour
             _ => "Normal Vision"
         };
 
-        string fixText = fixOn ? "Apply Fix: ON" : "Apply Fix: OFF";
+        string fixText =
+            !fix ? "Apply Fix: OFF" :
+            fixPlus ? "Apply Fix: FIX+" :
+            "Apply Fix: FIX";
+
         return $"{modeName}\n{fixText}";
     }
 }
