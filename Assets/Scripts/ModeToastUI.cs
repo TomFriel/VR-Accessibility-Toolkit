@@ -7,7 +7,7 @@ PSEUDOCODE (clear overview)
 - Wait until the welcome popup is dismissed before showing any toasts.
 - Show toast with:
     - current CVD simulation mode
-    - Apply Fix state (OFF / FIX / FIX+)
+    - current poster display state (OFF / FIX / FIX+)
 - Fade toast out after a short duration.
 */
 
@@ -23,12 +23,12 @@ public class ModeToastUI : MonoBehaviour
     public float showSeconds = 1.5f;
     public float fadeSeconds = 0.25f;
 
-    CvdModeDriver.CvdMode lastMode;
-    bool lastFix;
-    bool lastFixPlus;
-    float timer;
+    private CvdModeDriver.CvdMode lastMode;
+    private bool lastFix;
+    private bool lastFixPlus;
+    private float timer;
 
-    void Start() // Finds references and hides toast at startup.
+    void Start()
     {
         if (modeDriver == null) modeDriver = FindFirstObjectByType<CvdModeDriver>();
         if (fixManager == null) fixManager = FindFirstObjectByType<AccessibilityManager>();
@@ -41,7 +41,7 @@ public class ModeToastUI : MonoBehaviour
         if (canvasGroup != null) canvasGroup.alpha = 0f;
     }
 
-    void Update() // Waits for welcome dismissal, then shows/updates and fades the toast.
+    void Update()
     {
         if (!WelcomeToastOnce.WelcomeDismissed) return;
 
@@ -73,14 +73,14 @@ public class ModeToastUI : MonoBehaviour
         }
     }
 
-    void ShowText(string text) // Sets toast text and restarts timer.
+    void ShowText(string text)
     {
         if (label != null) label.text = text;
         timer = showSeconds;
         if (canvasGroup != null) canvasGroup.alpha = 1f;
     }
 
-    string BuildText(CvdModeDriver.CvdMode mode, bool fix, bool fixPlus) // Builds user-facing toast text.
+    string BuildText(CvdModeDriver.CvdMode mode, bool fix, bool fixPlus)
     {
         string modeName = mode switch
         {
@@ -91,9 +91,9 @@ public class ModeToastUI : MonoBehaviour
         };
 
         string fixText =
-            !fix ? "Apply Fix: OFF" :
-            fixPlus ? "Apply Fix: FIX+" :
-            "Apply Fix: FIX";
+            !fix ? "Poster View: ORIGINAL" :
+            fixPlus ? "Poster View: FIX+" :
+            "Poster View: FIX";
 
         return $"{modeName}\n{fixText}";
     }

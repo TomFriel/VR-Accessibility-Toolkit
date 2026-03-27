@@ -14,47 +14,43 @@ PSEUDOCODE (clear overview)
 
 public class WelcomeToastOnce : MonoBehaviour
 {
-    // Gate flag for other UI scripts (true only after the welcome is dismissed).
     public static bool WelcomeDismissed { get; private set; } = false;
 
     [Header("UI References")]
-    public TextMeshProUGUI label;           // Text element that displays the welcome message.
-    public CanvasGroup canvasGroup;         // CanvasGroup used for fade/visibility control.
+    public TextMeshProUGUI label;
+    public CanvasGroup canvasGroup;
 
     [Header("Message")]
     [TextArea(2, 10)]
     public string message =
         "Welcome to the VR Accessibility Gallery!\n\n" +
-        "Use 1–4 to change CVD simulation.\n" +
-        "Press G to toggle Apply Fix.\n\n" +
-        "Look at the posters and compare readability.";
+        "Use the LEFT WRIST MENU to change CVD simulation.\n" +
+        "Use the BUTTONS ABOVE EACH POSTER to switch between Original, Fix, and Fix+.\n\n" +
+        "Compare how each design reads under different vision conditions.";
 
     [Header("Dismiss (keyboard for testing)")]
-    public KeyCode dismissKey = KeyCode.Return; // Key to dismiss the popup while testing in editor.
-    public bool allowSpaceToo = true;           // Enables Space as an additional dismiss key.
+    public KeyCode dismissKey = KeyCode.Return;
+    public bool allowSpaceToo = true;
 
     [Header("Dismiss behavior")]
-    public bool fadeOnDismiss = true;     // Enables fading before the popup is disabled.
-    public float fadeSeconds = 0.35f;    // Duration of the fade-out.
+    public bool fadeOnDismiss = true;
+    public float fadeSeconds = 0.35f;
 
     [Header("Show only once ever (PlayerPrefs)")]
-    public bool onlyOnceEver = false;                   // If enabled, the popup shows once per machine/user.
-    public string playerPrefsKey = "WelcomeToastShown"; // PlayerPrefs key used to remember the popup state.
+    public bool onlyOnceEver = false;
+    public string playerPrefsKey = "WelcomeToastShown";
 
-    private bool dismissed = false;  // Tracks whether the popup has already been dismissed.
-    private bool fading = false;     // Tracks whether a fade-out is in progress.
-    private float fadeTimer = 0f;    // Countdown timer used for fading.
+    private bool dismissed = false;
+    private bool fading = false;
+    private float fadeTimer = 0f;
 
-    void Awake() // Initializes state, optionally skips if already shown, otherwise shows the welcome popup.
+    void Awake()
     {
-        // Default state: other toasts remain blocked until the welcome is dismissed (unless skipped below).
         WelcomeDismissed = false;
 
-        // Auto-fill references if they were not assigned in the Inspector.
         if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
         if (label == null) label = GetComponentInChildren<TextMeshProUGUI>(true);
 
-        // Skip instantly if configured to show only once and the flag is already set.
         if (onlyOnceEver && PlayerPrefs.GetInt(playerPrefsKey, 0) == 1)
         {
             WelcomeDismissed = true;
@@ -63,10 +59,8 @@ public class WelcomeToastOnce : MonoBehaviour
             return;
         }
 
-        // Show the popup immediately.
         Show(message);
 
-        // Persist "shown once" state if enabled.
         if (onlyOnceEver)
         {
             PlayerPrefs.SetInt(playerPrefsKey, 1);
@@ -74,11 +68,10 @@ public class WelcomeToastOnce : MonoBehaviour
         }
     }
 
-    void Update() // Handles keyboard dismissal and performs fade-out over time (if enabled).
+    void Update()
     {
         if (dismissed) return;
 
-        // Keyboard dismissal path (useful for editor testing).
         bool pressed =
             Input.GetKeyDown(dismissKey) ||
             (allowSpaceToo && Input.GetKeyDown(KeyCode.Space));
@@ -88,7 +81,6 @@ public class WelcomeToastOnce : MonoBehaviour
             StartDismiss();
         }
 
-        // Fade-out animation path.
         if (fading)
         {
             fadeTimer -= Time.deltaTime;
@@ -103,13 +95,13 @@ public class WelcomeToastOnce : MonoBehaviour
         }
     }
 
-    public void DismissWelcome() // Public UI hook for Button OnClick: begins dismissal (fade or instant).
+    public void DismissWelcome()
     {
         if (dismissed) return;
         StartDismiss();
     }
 
-    private void StartDismiss() // Starts a fade-out if enabled; otherwise dismisses immediately.
+    private void StartDismiss()
     {
         if (fadeOnDismiss && canvasGroup != null && fadeSeconds > 0f)
         {
@@ -122,7 +114,7 @@ public class WelcomeToastOnce : MonoBehaviour
         }
     }
 
-    public void FinishDismiss() // Finalizes dismissal: unlocks other toasts and disables the popup.
+    public void FinishDismiss()
     {
         if (dismissed) return;
 
@@ -133,21 +125,21 @@ public class WelcomeToastOnce : MonoBehaviour
         HideInstant();
     }
 
-    public void Show(string text) // Updates the label text and makes the popup visible.
+    public void Show(string text)
     {
         if (label != null) label.text = text;
         if (canvasGroup != null) canvasGroup.alpha = 1f;
         gameObject.SetActive(true);
     }
 
-    private void HideInstant() // Immediately hides and disables the popup object.
+    private void HideInstant()
     {
         if (canvasGroup != null) canvasGroup.alpha = 0f;
         gameObject.SetActive(false);
     }
 
     [ContextMenu("Reset Welcome Toast (Show Again)")]
-    public void ResetWelcomeToast() // Clears PlayerPrefs state so the welcome can be tested again.
+    public void ResetWelcomeToast()
     {
         PlayerPrefs.DeleteKey(playerPrefsKey);
         PlayerPrefs.Save();
