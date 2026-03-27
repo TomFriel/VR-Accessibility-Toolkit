@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "name": "WristMenuInput",
+    "maps": [
+        {
+            "name": "XR",
+            "id": "71803791-544d-4142-b2e5-31ccf196f3d4",
+            "actions": [
+                {
+                    "name": "ToggleMenu",
+                    "type": "Button",
+                    "id": "7a338a47-dee5-4575-917a-3298a7d58dc0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5a493efe-6647-4f69-bd1b-503632aefddb",
+                    "path": "<XRController>{LeftHand}/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5939936b-1322-4e84-a702-90dfa65f593f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

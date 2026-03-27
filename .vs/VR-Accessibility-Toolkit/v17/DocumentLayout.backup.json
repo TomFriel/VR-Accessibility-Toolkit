@@ -3,6 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\UIRayGate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\UIRayGate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WristMenuToggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\WristMenuToggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\WelcomeToastOnce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeButtonClick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\ModeButtonClick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeHoverLabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\ModeHoverLabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\CvdModeDriver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\CvdModeDriver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeToastUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\ModeToastUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\AccessibilityPoster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\AccessibilityPoster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,24 +39,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\AccessibilityManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeToastUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\ModeToastUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\WelcomeToastOnce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\ColorBlindrMath.hlsl||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Shaders\\ColorBlindrMath.hlsl||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ColourBlindModeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\ColourBlindModeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\CvdModeDriver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\CvdModeDriver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\DebugURPActiveRenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -109,23 +125,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AssetsShadersCVD_Fullscreen_URP.shader",
-              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
-              "RelativeDocumentMoniker": "Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
-              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
-              "RelativeToolTip": "Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAqwE0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-02-04T16:30:21.603Z"
+              "DocumentIndex": 0,
+              "Title": "UIRayGate.cs",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\UIRayGate.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UIRayGate.cs",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\UIRayGate.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UIRayGate.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAADwvxMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T23:00:02.582Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "ColourBlindModeController.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ColourBlindModeController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ColourBlindModeController.cs",
@@ -137,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "ColorBlindrMath.hlsl",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\ColorBlindrMath.hlsl",
               "RelativeDocumentMoniker": "Assets\\Shaders\\ColorBlindrMath.hlsl",
@@ -149,44 +166,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ModeToastUI.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeToastUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ModeToastUI.cs",
               "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeToastUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\ModeToastUI.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAADwv1gAAABMAAAAAAAAAA==",
+              "ViewState": "AgIAAD0AAAAAAAAAAADwv10AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-18T14:50:57.554Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "CvdModeDriver.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\CvdModeDriver.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CvdModeDriver.cs",
               "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\CvdModeDriver.cs",
               "RelativeToolTip": "Assets\\Scripts\\CvdModeDriver.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAACwAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-18T11:58:10.147Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "AccessibilityManager.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\AccessibilityManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AccessibilityManager.cs",
               "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\AccessibilityManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\AccessibilityManager.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAADwv1AAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAADwv14AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T19:13:19.349Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T19:13:19.349Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "NewUnlitUniversalRenderPipelineShader.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\NewUnlitUniversalRenderPipelineShader.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\NewUnlitUniversalRenderPipelineShader.shader",
@@ -197,20 +213,81 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "WelcomeToastOnce.cs",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WelcomeToastOnce.cs",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WelcomeToastOnce.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAADwv5MAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T13:04:44.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WristMenuToggle.cs",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WristMenuToggle.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WristMenuToggle.cs",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WristMenuToggle.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WristMenuToggle.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAADwvzEAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T21:24:47.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AssetsShadersCVD_Fullscreen_URP.shader",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
+              "RelativeDocumentMoniker": "Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
+              "RelativeToolTip": "Assets\\Shaders\\AssetsShadersCVD_Fullscreen_URP.shader",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAqwE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-02-04T16:30:21.603Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ModeHoverLabel.cs",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeHoverLabel.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ModeHoverLabel.cs",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeHoverLabel.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ModeHoverLabel.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T20:08:09.962Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ModeButtonClick.cs",
+              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeButtonClick.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ModeButtonClick.cs",
+              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\ModeButtonClick.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ModeButtonClick.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T21:25:35.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "AccessibilityPoster.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\AccessibilityPoster.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AccessibilityPoster.cs",
               "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\AccessibilityPoster.cs",
               "RelativeToolTip": "Assets\\Scripts\\AccessibilityPoster.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAADwv0gAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAADwv2oAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T11:59:09.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-18T11:59:09.155Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "ShadersCVD_Fullscreen_URP.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\ShadersCVD_Fullscreen_URP.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\ShadersCVD_Fullscreen_URP.shader",
@@ -222,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "PINK_FULLSCREEN_DEBUG.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\PINK_FULLSCREEN_DEBUG.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\PINK_FULLSCREEN_DEBUG.shader",
@@ -234,19 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "WelcomeToastOnce.cs",
-              "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\WelcomeToastOnce.cs",
-              "ToolTip": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\WelcomeToastOnce.cs",
-              "RelativeToolTip": "Assets\\Scripts\\WelcomeToastOnce.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAADwv40AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-19T13:04:44.462Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "FullscreenPinkURP.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\FullscreenPinkURP.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\FullscreenPinkURP.shader",
@@ -258,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "BLIT_PASSTHROUGH.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\BLIT_PASSTHROUGH.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\BLIT_PASSTHROUGH.shader",
@@ -270,7 +335,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "DebugURPActiveRenderer.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\DebugURPActiveRenderer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\DebugURPActiveRenderer.cs",
@@ -282,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "CvdModeDriver.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\CvdModeDriver.cs",
               "RelativeDocumentMoniker": "Assets\\Shaders\\CvdModeDriver.cs",
@@ -293,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "CvdBlitFeature.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\CvdBlitFeature.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CvdBlitFeature.cs",
@@ -305,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "UniversalAdditionalCameraData.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Library\\PackageCache\\com.unity.render-pipelines.universal@cc5029882822\\Runtime\\UniversalAdditionalCameraData.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@cc5029882822\\Runtime\\UniversalAdditionalCameraData.cs",
@@ -317,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "ColorBlindr.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\ColorBlindr.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\ColorBlindr.shader",
@@ -329,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "ColorBlindrURP_Fullscreen.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Shaders\\ColorBlindrURP_Fullscreen.shader",
               "RelativeDocumentMoniker": "Assets\\Shaders\\ColorBlindrURP_Fullscreen.shader",
@@ -341,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "DisableOcclusionMesh.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\Scripts\\DisableOcclusionMesh.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\DisableOcclusionMesh.cs",
@@ -353,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "XRInteractionManager.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Library\\PackageCache\\com.unity.xr.interaction.toolkit@7faefd988174\\Runtime\\Interaction\\XRInteractionManager.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.xr.interaction.toolkit@7faefd988174\\Runtime\\Interaction\\XRInteractionManager.cs",
@@ -365,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "InputActionManager.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Library\\PackageCache\\com.unity.xr.interaction.toolkit@7faefd988174\\Runtime\\Inputs\\InputActionManager.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.xr.interaction.toolkit@7faefd988174\\Runtime\\Inputs\\InputActionManager.cs",
@@ -377,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "Lit.shader",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Library\\PackageCache\\com.unity.render-pipelines.universal@cc5029882822\\Shaders\\Lit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@cc5029882822\\Shaders\\Lit.shader",
@@ -389,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "TeleportationActivator.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\VR-Accessibility-Toolkit\\Assets\\TeleportationActivator.cs",
               "RelativeDocumentMoniker": "Assets\\TeleportationActivator.cs",
@@ -401,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "inputTest.cs",
               "DocumentMoniker": "C:\\Users\\tomfr\\OneDrive - Atlantic TU\\Documents\\VRToolKit\\URPToolkit\\My project\\VR-Accessibility-Toolkit\\Assets\\inputTest.cs",
               "RelativeDocumentMoniker": "..\\URPToolkit\\My project\\VR-Accessibility-Toolkit\\Assets\\inputTest.cs",
