@@ -53,7 +53,66 @@ public class AccessibilityPoster : MonoBehaviour
         targetRenderer.material = normalMaterial;
     }
 
+<<<<<<< Updated upstream
     public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode) // Applies correct material for OFF/FIX/FIX+.
+=======
+    private void Start()
+    {
+        RefreshMaterial();
+    }
+
+    public void ShowOriginal()
+    {
+        currentView = PosterView.Original;
+        RefreshMaterial();
+    }
+
+    public void ShowFix()
+    {
+        currentView = PosterView.Fix;
+        RefreshMaterial();
+    }
+
+    public void ShowFixPlus()
+    {
+        currentView = PosterView.FixPlus;
+        RefreshMaterial();
+    }
+
+    // Keeps compatibility with your current manager.
+    public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode)
+    {
+        currentMode = mode;
+
+        if (!fixOn)
+        {
+            currentView = PosterView.Original;
+        }
+        else if (fixPlusOn)
+        {
+            currentView = PosterView.FixPlus;
+        }
+        else
+        {
+            currentView = PosterView.Fix;
+        }
+
+        RefreshMaterial();
+    }
+
+    public void SetCurrentMode(CvdModeDriver.CvdMode mode)
+    {
+        currentMode = mode;
+        RefreshMaterial();
+    }
+
+    public void RefreshNow()
+    {
+        RefreshMaterial();
+    }
+
+    private void RefreshMaterial()
+>>>>>>> Stashed changes
     {
         if (targetRenderer == null) return;
 
