@@ -11,7 +11,6 @@ PSEUDOCODE (clear overview)
 - On Awake:
     - auto-find MeshRenderer if missing
     - cache current shared material as normalMaterial if missing
-    - apply normalMaterial as the starting state
 - ApplyFixState(fixOn, fixPlusOn, mode):
     - If Fix is OFF: use normalMaterial
     - If Fix is ON and Fix+ is OFF: use Fix material for that mode (fallback to normal)
@@ -21,10 +20,10 @@ PSEUDOCODE (clear overview)
 public class AccessibilityPoster : MonoBehaviour
 {
     [Header("Renderer")]
-    public MeshRenderer targetRenderer; // Renderer that receives material swaps.
+    public MeshRenderer targetRenderer;
 
     [Header("Normal (original)")]
-    public Material normalMaterial; // Original poster material.
+    public Material normalMaterial;
 
     [Header("Fix (algorithmic) materials")]
     public Material protanFixMaterial;
@@ -36,7 +35,7 @@ public class AccessibilityPoster : MonoBehaviour
     public Material deutanFixPlusMaterial;
     public Material tritanFixPlusMaterial;
 
-    private void Awake() // Ensures renderer/material references exist and applies the normal material.
+    private void Awake()
     {
         if (targetRenderer == null)
             targetRenderer = GetComponent<MeshRenderer>();
@@ -49,11 +48,15 @@ public class AccessibilityPoster : MonoBehaviour
 
         if (normalMaterial == null)
             normalMaterial = targetRenderer.sharedMaterial;
-
-        targetRenderer.material = normalMaterial;
     }
 
-    public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode) // Applies correct material for OFF/FIX/FIX+.
+    private void Start()
+    {
+        if (targetRenderer != null && normalMaterial != null)
+            targetRenderer.material = normalMaterial;
+    }
+
+    public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode)
     {
         if (targetRenderer == null) return;
 
@@ -61,17 +64,14 @@ public class AccessibilityPoster : MonoBehaviour
 
         if (!fixOn)
         {
-            // OFF
             chosen = normalMaterial;
         }
-        else if (fixOn && !fixPlusOn)
+        else if (!fixPlusOn)
         {
-            // FIX
             chosen = GetFixMaterialForMode(mode) ?? normalMaterial;
         }
         else
         {
-            // FIX+
             chosen = GetFixPlusMaterialForMode(mode)
                      ?? GetFixMaterialForMode(mode)
                      ?? normalMaterial;
@@ -86,7 +86,17 @@ public class AccessibilityPoster : MonoBehaviour
         targetRenderer.material = chosen;
     }
 
-    private Material GetFixMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX material for current mode (or null).
+    public void RefreshNow()
+    {
+        // Re-apply whatever material is currently on the renderer.
+        // This is useful after textures are updated at runtime.
+        if (targetRenderer != null && targetRenderer.material != null)
+        {
+            targetRenderer.material = targetRenderer.material;
+        }
+    }
+
+    private Material GetFixMaterialForMode(CvdModeDriver.CvdMode mode)
     {
         switch (mode)
         {
@@ -101,7 +111,7 @@ public class AccessibilityPoster : MonoBehaviour
         }
     }
 
-    private Material GetFixPlusMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX+ material for current mode (or null).
+    private Material GetFixPlusMaterialForMode(CvdModeDriver.CvdMode mode)
     {
         switch (mode)
         {

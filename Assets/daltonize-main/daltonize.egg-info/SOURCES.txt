@@ -1,0 +1,11 @@
+COPYING
+README.md
+setup.py
+daltonize/__init__.py
+daltonize/daltonize.py
+daltonize.egg-info/PKG-INFO
+daltonize.egg-info/SOURCES.txt
+daltonize.egg-info/dependency_links.txt
+daltonize.egg-info/entry_points.txt
+daltonize.egg-info/requires.txt
+daltonize.egg-info/top_level.txt

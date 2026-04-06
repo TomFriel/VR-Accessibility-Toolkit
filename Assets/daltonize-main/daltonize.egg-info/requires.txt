@@ -1,0 +1,6 @@
+numpy>=1.9
+Pillow
+
+[test]
+matplotlib>=3.0.0
+pytest
