@@ -107,6 +107,11 @@ public class AccessibilityPoster : MonoBehaviour
         RefreshMaterial();
     }
 
+    public void RefreshNow()
+    {
+        RefreshMaterial();
+    }
+
     private void RefreshMaterial()
     {
         if (targetRenderer == null) return;

@@ -1,0 +1,13 @@
+*~
+*.pyc
+build
+dist
+.idea
+/daltonize.egg-info/
+.ipynb_checkpoints/
+doc/colourmaps.pdf
+.vscode
+.coverage*
+.tox
+coverage.json
+result-images/
