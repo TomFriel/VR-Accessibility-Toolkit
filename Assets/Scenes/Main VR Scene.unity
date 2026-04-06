@@ -544,6 +544,8 @@ MonoBehaviour:
   protanFixPlusMaterial: {fileID: 0}
   deutanFixPlusMaterial: {fileID: 0}
   tritanFixPlusMaterial: {fileID: 0}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &122497634
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1658,6 +1660,8 @@ MonoBehaviour:
   protanFixPlusMaterial: {fileID: 2100000, guid: 403d6e5458351bf4c895174f8f29df27, type: 2}
   deutanFixPlusMaterial: {fileID: 2100000, guid: b47b071ed4711b341835149871b15deb, type: 2}
   tritanFixPlusMaterial: {fileID: 2100000, guid: a57273c591ddaaf4cb663e0aef950a7c, type: 2}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &491215373
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1901,13 +1905,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccessibilityPoster
   targetRenderer: {fileID: 641543070}
-  normalMaterial: {fileID: 2100000, guid: 76a3514ec57d45f4bb5b242322d7a0a0, type: 2}
-  protanFixMaterial: {fileID: 2100000, guid: dc5d5a117adcd154da65b77eae147eea, type: 2}
-  deutanFixMaterial: {fileID: 2100000, guid: e211a43b021fc74428ba30c3b2a85a51, type: 2}
-  tritanFixMaterial: {fileID: 2100000, guid: 9126f91d597620543821b352f6037cad, type: 2}
-  protanFixPlusMaterial: {fileID: 0}
-  deutanFixPlusMaterial: {fileID: 0}
-  tritanFixPlusMaterial: {fileID: 0}
+  normalMaterial: {fileID: 2100000, guid: 23dace7b4b640fb4a91af470f21517d7, type: 2}
+  protanFixMaterial: {fileID: 2100000, guid: c4c6a6b2c8be51347bde97ae47414898, type: 2}
+  deutanFixMaterial: {fileID: 2100000, guid: 976a1a408aae0c64c9f788a6a08c069d, type: 2}
+  tritanFixMaterial: {fileID: 2100000, guid: 077e417f0009a8842aa17be833339931, type: 2}
+  protanFixPlusMaterial: {fileID: 2100000, guid: 5920c417d107bcc41adb1d72228173aa, type: 2}
+  deutanFixPlusMaterial: {fileID: 2100000, guid: 7e6e825b7d4776141baf4732d6687f80, type: 2}
+  tritanFixPlusMaterial: {fileID: 2100000, guid: b25dfb0ab98738946bb655b356a3ae83, type: 2}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &641543069
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3613,6 +3619,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3475118261464492563, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
   m_PrefabInstance: {fileID: 1036666757}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1039611725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039611728}
+  - component: {fileID: 1039611727}
+  - component: {fileID: 1039611726}
+  m_Layer: 0
+  m_Name: Enemy_AllyPosterClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1039611726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039611725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a364535b8573844bf256e0b0d12b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GenerateOnStart
+  client: {fileID: 1039611727}
+  runOnStart: 1
+--- !u!114 &1039611727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039611725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca3a1c6eecdd7445a14c9799e842734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PosterGenerationClient
+  apiUrl: http://127.0.0.1:8000/generate
+  templateType: enemy_ally
+  sourceTexture: {fileID: 2800000, guid: c7ff0e5f0eebe304eb5b6f56ab293073, type: 3}
+  linkedPoster: {fileID: 641543068}
+  accessibilityManager: {fileID: 2035541021}
+  targetRenderer: {fileID: 641543070}
+  matNormal: {fileID: 2100000, guid: 23dace7b4b640fb4a91af470f21517d7, type: 2}
+  matFixDeutan: {fileID: 2100000, guid: 976a1a408aae0c64c9f788a6a08c069d, type: 2}
+  matFixProtan: {fileID: 2100000, guid: c4c6a6b2c8be51347bde97ae47414898, type: 2}
+  matFixTritan: {fileID: 2100000, guid: 077e417f0009a8842aa17be833339931, type: 2}
+  matFixPlusDeutan: {fileID: 2100000, guid: 7e6e825b7d4776141baf4732d6687f80, type: 2}
+  matFixPlusProtan: {fileID: 2100000, guid: 5920c417d107bcc41adb1d72228173aa, type: 2}
+  matFixPlusTritan: {fileID: 2100000, guid: b25dfb0ab98738946bb655b356a3ae83, type: 2}
+  detectedTexture: {fileID: 0}
+  fixDeutanTexture: {fileID: 0}
+  fixProtanTexture: {fileID: 0}
+  fixTritanTexture: {fileID: 0}
+  fixPlusDeutanTexture: {fileID: 0}
+  fixPlusProtanTexture: {fileID: 0}
+  fixPlusTritanTexture: {fileID: 0}
+--- !u!4 &1039611728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039611725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.84354, y: 1.02799, z: 4.60695}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1078147517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4570,6 +4655,8 @@ MonoBehaviour:
   protanFixPlusMaterial: {fileID: 2100000, guid: 68ad819abc873b346afd326849c0f1ad, type: 2}
   deutanFixPlusMaterial: {fileID: 2100000, guid: fe29b07b064569643b046e28e197145a, type: 2}
   tritanFixPlusMaterial: {fileID: 2100000, guid: 8c9d83fdaf66f1743bbc43c88b33197c, type: 2}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &1479699507
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5147,6 +5234,8 @@ MonoBehaviour:
   protanFixPlusMaterial: {fileID: 0}
   deutanFixPlusMaterial: {fileID: 0}
   tritanFixPlusMaterial: {fileID: 0}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &1675481915
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5784,6 +5873,8 @@ MonoBehaviour:
   protanFixPlusMaterial: {fileID: 2100000, guid: 09d67b22e07d9f94a9f0b736e2e79e4a, type: 2}
   deutanFixPlusMaterial: {fileID: 2100000, guid: 6d556a2e52396774b85eeaab4c2c8753, type: 2}
   tritanFixPlusMaterial: {fileID: 2100000, guid: 4232b09364530a2498b312c45a46f439, type: 2}
+  currentView: 0
+  currentMode: 0
 --- !u!64 &1865439659
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7524,4 +7615,4 @@ SceneRoots:
   - {fileID: 545200290}
   - {fileID: 1925533710}
   - {fileID: 395099617}
-  - {fileID: 1570317205}
+  - {fileID: 1039611728}
