@@ -1,2 +1,19 @@
 fileFormatVersion: 2
 guid: a37fe90cca891f3419c213ec88d256af
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - targetRenderer: {instanceID: 0}
+  - normalMaterial: {instanceID: 0}
+  - protanFixMaterial: {instanceID: 0}
+  - deutanFixMaterial: {instanceID: 0}
+  - tritanFixMaterial: {instanceID: 0}
+  - protanFixPlusMaterial: {instanceID: 0}
+  - deutanFixPlusMaterial: {instanceID: 0}
+  - tritanFixPlusMaterial: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
