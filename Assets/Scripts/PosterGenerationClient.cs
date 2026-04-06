@@ -211,14 +211,16 @@ public class PosterGenerationClient : MonoBehaviour
                 accessibilityManager = FindFirstObjectByType<AccessibilityManager>();
             }
 
-            if (accessibilityManager != null)
+            // If manager exists, just force its posters to update by toggling current state through ApplyFixState logic
+            if (accessibilityManager != null && linkedPoster != null)
             {
-                accessibilityManager.RefreshPosters();
-                Debug.Log("accessibilityManager refreshed posters.");
-            }
-            else
-            {
-                Debug.LogWarning("accessibilityManager is null.");
+                linkedPoster.ApplyFixState(
+                    accessibilityManager.applyFix,
+                    accessibilityManager.applyFixPlus,
+                    FindFirstObjectByType<CvdModeDriver>() != null
+                        ? FindFirstObjectByType<CvdModeDriver>().CurrentMode
+                        : CvdModeDriver.CvdMode.Normal
+                );
             }
 
             SaveTextureIfPossible(detectedTexture, "detected_output.png");

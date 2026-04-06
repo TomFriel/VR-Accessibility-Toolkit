@@ -3,28 +3,30 @@ using UnityEngine;
 /*
 PSEUDOCODE (clear overview)
 --------------------------
-- Hold references to:
-    - MeshRenderer to update
-    - Normal material (original)
-    - Fix materials per CVD mode (Protan/Deutan/Tritan)
-    - Fix+ materials per CVD mode (Protan/Deutan/Tritan)
-- On Awake:
-    - auto-find MeshRenderer if missing
-    - cache current shared material as normalMaterial if missing
-    - apply normalMaterial as the starting state
-- ApplyFixState(fixOn, fixPlusOn, mode):
-    - If Fix is OFF: use normalMaterial
-    - If Fix is ON and Fix+ is OFF: use Fix material for that mode (fallback to normal)
-    - If Fix is ON and Fix+ is ON: use Fix+ material for that mode (fallback to Fix, then normal)
+- Each poster supports TWO workflows:
+    1) Old global workflow using Apply Fix / Apply Fix+ from AccessibilityManager.
+    2) New local button workflow using Original / Fix / Fix+ buttons above that poster.
+- localView overrides the global Fix display when set through button clicks.
+- Material chosen depends on:
+    - current local view (Original / Fix / Fix+)
+    - current global CVD mode (Normal / Protan / Deutan / Tritan)
+- In Normal mode, Fix and Fix+ fall back to the original material unless you choose otherwise.
 */
 
 public class AccessibilityPoster : MonoBehaviour
 {
+    public enum PosterView
+    {
+        Original,
+        Fix,
+        FixPlus
+    }
+
     [Header("Renderer")]
-    public MeshRenderer targetRenderer; // Renderer that receives material swaps.
+    public MeshRenderer targetRenderer;
 
     [Header("Normal (original)")]
-    public Material normalMaterial; // Original poster material.
+    public Material normalMaterial;
 
     [Header("Fix (algorithmic) materials")]
     public Material protanFixMaterial;
@@ -36,7 +38,11 @@ public class AccessibilityPoster : MonoBehaviour
     public Material deutanFixPlusMaterial;
     public Material tritanFixPlusMaterial;
 
-    private void Awake() // Ensures renderer/material references exist and applies the normal material.
+    [Header("Runtime state")]
+    [SerializeField] private PosterView currentView = PosterView.Original;
+    [SerializeField] private CvdModeDriver.CvdMode currentMode = CvdModeDriver.CvdMode.Normal;
+
+    private void Awake()
     {
         if (targetRenderer == null)
             targetRenderer = GetComponent<MeshRenderer>();
@@ -49,13 +55,8 @@ public class AccessibilityPoster : MonoBehaviour
 
         if (normalMaterial == null)
             normalMaterial = targetRenderer.sharedMaterial;
-
-        targetRenderer.material = normalMaterial;
     }
 
-<<<<<<< Updated upstream
-    public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode) // Applies correct material for OFF/FIX/FIX+.
-=======
     private void Start()
     {
         RefreshMaterial();
@@ -112,28 +113,26 @@ public class AccessibilityPoster : MonoBehaviour
     }
 
     private void RefreshMaterial()
->>>>>>> Stashed changes
     {
         if (targetRenderer == null) return;
 
         Material chosen = normalMaterial;
 
-        if (!fixOn)
+        switch (currentView)
         {
-            // OFF
-            chosen = normalMaterial;
-        }
-        else if (fixOn && !fixPlusOn)
-        {
-            // FIX
-            chosen = GetFixMaterialForMode(mode) ?? normalMaterial;
-        }
-        else
-        {
-            // FIX+
-            chosen = GetFixPlusMaterialForMode(mode)
-                     ?? GetFixMaterialForMode(mode)
-                     ?? normalMaterial;
+            case PosterView.Original:
+                chosen = normalMaterial;
+                break;
+
+            case PosterView.Fix:
+                chosen = GetFixMaterialForMode(currentMode) ?? normalMaterial;
+                break;
+
+            case PosterView.FixPlus:
+                chosen = GetFixPlusMaterialForMode(currentMode)
+                         ?? GetFixMaterialForMode(currentMode)
+                         ?? normalMaterial;
+                break;
         }
 
         if (chosen == null)
@@ -145,7 +144,7 @@ public class AccessibilityPoster : MonoBehaviour
         targetRenderer.material = chosen;
     }
 
-    private Material GetFixMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX material for current mode (or null).
+    private Material GetFixMaterialForMode(CvdModeDriver.CvdMode mode)
     {
         switch (mode)
         {
@@ -160,7 +159,7 @@ public class AccessibilityPoster : MonoBehaviour
         }
     }
 
-    private Material GetFixPlusMaterialForMode(CvdModeDriver.CvdMode mode) // Returns FIX+ material for current mode (or null).
+    private Material GetFixPlusMaterialForMode(CvdModeDriver.CvdMode mode)
     {
         switch (mode)
         {
