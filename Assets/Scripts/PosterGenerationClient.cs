@@ -211,7 +211,6 @@ public class PosterGenerationClient : MonoBehaviour
                 accessibilityManager = FindFirstObjectByType<AccessibilityManager>();
             }
 
-            // If manager exists, just force its posters to update by toggling current state through ApplyFixState logic
             if (accessibilityManager != null && linkedPoster != null)
             {
                 linkedPoster.ApplyFixState(
