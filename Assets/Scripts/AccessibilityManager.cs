@@ -43,7 +43,6 @@ public class AccessibilityManager : MonoBehaviour
 
     private void Update()
     {
-        // Keyboard support stays for editor testing.
         if (Input.GetKeyDown(toggleFixKey))
         {
             ToggleFix();
@@ -54,7 +53,6 @@ public class AccessibilityManager : MonoBehaviour
             ToggleFixPlus();
         }
 
-        // Always refresh posters if global mode changes.
         var current = GetModeSafe();
         if (current != lastMode)
         {

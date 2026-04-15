@@ -80,7 +80,6 @@ public class AccessibilityPoster : MonoBehaviour
         RefreshMaterial();
     }
 
-    // Keeps compatibility with your current manager.
     public void ApplyFixState(bool fixOn, bool fixPlusOn, CvdModeDriver.CvdMode mode)
     {
         currentMode = mode;
