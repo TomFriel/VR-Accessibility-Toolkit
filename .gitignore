@@ -9,14 +9,12 @@
 [Uu]serSettings/
 [Pp]ackages/com.unity.collab-proxy/
 
-#Imports
+# Imports
 Assets/AllSkyFree/
 Assets/Models/
-Assets/Liminal Pools 001
-Assets/AK Studio Art
-
-
-
+Assets/Liminal Pools 001/
+Assets/AK Studio Art/
+Assets/Waldemarst/
 
 # Visual Studio / Rider / VSCode
 .vs/

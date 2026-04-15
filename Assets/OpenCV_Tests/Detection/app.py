@@ -17,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 ENEMY_ICON_PATH = os.path.join(BASE_DIR, "icons", "enemy_icon.png")
 ALLY_ICON_PATH = os.path.join(BASE_DIR, "icons", "ally_icon.png")
+MINIMAP_ICON_PATH = os.path.join(BASE_DIR, "icons", "Minimap_Icon.png")
 
 # =========================================================
 # SETTINGS
@@ -26,9 +27,12 @@ MIN_CONTOUR_AREA = 500
 MINIMAP_MIN_CONTOUR_AREA = 40
 
 # Enemy / Ally
-ICON_SCALE_FACTOR = 0.32
-CHEST_Y_RATIO = 0.42
+ICON_SCALE_FACTOR = 0.4
+CHEST_Y_RATIO = 0.28
 ICON_CENTER_Y_FINE_ADJUST = 0
+
+#Tritan manual adjustment
+ALLY_ICON_Y_FINE_ADJUST_TRITAN = -2
 
 # Health bar
 HEALTH_PATTERN_SPACING = 14
@@ -204,6 +208,116 @@ def create_colour_masks(image_bgr):
 
     return red_mask, green_mask
 
+def create_colour_masks_enemy_ally_tritan(image_bgr):
+    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+
+    # RED enemy
+    lower_red1 = np.array([0, 100, 100])
+    upper_red1 = np.array([10, 255, 255])
+
+    lower_red2 = np.array([160, 100, 100])
+    upper_red2 = np.array([179, 255, 255])
+
+    red_mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+    red_mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+    red_mask = cv2.bitwise_or(red_mask1, red_mask2)
+
+    # BLUE ally
+    lower_blue = np.array([90, 50, 50])
+    upper_blue = np.array([140, 255, 255])
+    blue_mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    kernel_small = np.ones((5, 5), np.uint8)
+    kernel_big = np.ones((9, 9), np.uint8)
+
+    # clean tiny noise
+    red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel_small)
+    blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_OPEN, kernel_small)
+
+    # thicken outlines
+    red_mask = cv2.dilate(red_mask, kernel_big, iterations=1)
+    blue_mask = cv2.dilate(blue_mask, kernel_big, iterations=1)
+
+    # close gaps
+    red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_CLOSE, kernel_big)
+    blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_CLOSE, kernel_big)
+
+    blue_mask = cv2.erode(blue_mask, kernel_small, iterations=1)
+    blue_mask = trim_bottom_of_mask(blue_mask, trim_ratio=0.12)
+
+    # fill the largest contour so get_main_blob sees one solid body
+    #red_mask = fill_largest_contour(red_mask)
+    #blue_mask = fill_largest_contour(blue_mask)
+
+    return red_mask, blue_mask   
+
+def create_colour_masks_healthbar(image_bgr):
+
+    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+
+    # red mask
+    lower_red1 = np.array([0, 120, 70])
+    upper_red1 = np.array([10, 255, 255])
+
+    lower_red2 = np.array([170, 120, 70])
+    upper_red2 = np.array([180, 255, 255])
+
+    red_mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+    red_mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+
+    red_mask = red_mask1 | red_mask2
+
+    # green mask
+    lower_green = np.array([40, 40, 40])
+    upper_green = np.array([80, 255, 255])
+
+    green_mask = cv2.inRange(hsv, lower_green, upper_green)
+
+    return red_mask, green_mask
+
+def create_colour_masks_healthbar_red_blue(image_bgr):
+    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+
+    # RED danger region
+    lower_red1 = np.array([0, 100, 100])
+    upper_red1 = np.array([10, 255, 255])
+
+    lower_red2 = np.array([160, 100, 100])
+    upper_red2 = np.array([179, 255, 255])
+
+    red_mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+    red_mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+    red_mask = cv2.bitwise_or(red_mask1, red_mask2)
+
+    # BLUE safe region
+    lower_blue = np.array([95, 120, 120])
+    upper_blue = np.array([115, 255, 255])
+    blue_mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    kernel_red = np.ones((5, 5), np.uint8)
+    kernel_blue = np.ones((3, 3), np.uint8)
+
+    red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel_red)
+    red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_CLOSE, kernel_red)
+
+    blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_OPEN, kernel_blue)
+    blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_CLOSE, kernel_blue)
+
+    blue_mask = cv2.erode(blue_mask, kernel_blue, iterations=1)
+
+    return red_mask, blue_mask
+
+def choose_best_healthbar_masks(image_bgr):
+    red_mask_rg, green_mask_rg = create_colour_masks_healthbar(image_bgr)
+    red_mask_by, green_mask_by = create_colour_masks_healthbar_tritan(image_bgr)
+
+    rg_score = int(np.count_nonzero(red_mask_rg)) + int(np.count_nonzero(green_mask_rg))
+    by_score = int(np.count_nonzero(red_mask_by)) + int(np.count_nonzero(green_mask_by))
+
+    if by_score > rg_score:
+        return red_mask_by, green_mask_by, "by"
+    else:
+        return red_mask_rg, green_mask_rg, "rg"
 
 def create_colour_masks_minimap(image_bgr):
     """
@@ -358,33 +472,104 @@ def get_chest_anchor(data):
     return int(chest_x), int(chest_y)
 
 
-def add_icons_to_fixplus(image_bgr, enemy_data, ally_data, enemy_icon, ally_icon):
+def add_icons_to_fixplus(image_bgr, enemy_data, ally_data, enemy_icon, ally_icon, ally_y_adjust=0):
     output = image_bgr.copy()
 
-    if enemy_data is not None and enemy_icon is not None:
-        icon_width = max(40, int(enemy_data["w"] * ICON_SCALE_FACTOR))
-        enemy_anchor = get_chest_anchor(enemy_data)
+    if enemy_data is None:
+        enemy_items = []
+    elif isinstance(enemy_data, list):
+        enemy_items = enemy_data
+    else:
+        enemy_items = [enemy_data]
 
-        if enemy_anchor is not None:
-            chest_x, chest_y = enemy_anchor
-            eh, ew = enemy_icon.shape[:2]
-            icon_height = max(1, int(icon_width * (eh / float(ew))))
-            icon_top_y = chest_y - (icon_height // 2)
-            output = overlay_icon(output, enemy_icon, chest_x, icon_top_y, icon_width)
+    if ally_data is None:
+        ally_items = []
+    elif isinstance(ally_data, list):
+        ally_items = ally_data
+    else:
+        ally_items = [ally_data]
 
-    if ally_data is not None and ally_icon is not None:
-        icon_width = max(40, int(ally_data["w"] * ICON_SCALE_FACTOR))
-        ally_anchor = get_chest_anchor(ally_data)
+    if enemy_icon is not None:
+        for enemy in enemy_items:
+            icon_width = max(20, int(enemy["w"] * ICON_SCALE_FACTOR))
+            enemy_anchor = get_chest_anchor(enemy)
 
-        if ally_anchor is not None:
-            chest_x, chest_y = ally_anchor
+            if enemy_anchor is not None:
+                chest_x, chest_y = enemy_anchor
+                eh, ew = enemy_icon.shape[:2]
+                icon_height = max(1, int(icon_width * (eh / float(ew))))
+                icon_top_y = chest_y - (icon_height // 2)
+                output = overlay_icon(output, enemy_icon, chest_x, icon_top_y, icon_width)
+
+    if ally_icon is not None:
+        for ally in ally_items:
+            icon_width = max(20, int(ally["w"] * ICON_SCALE_FACTOR))
+            cx, cy = ally["cx"], ally["cy"]
+
             ah, aw = ally_icon.shape[:2]
             icon_height = max(1, int(icon_width * (ah / float(aw))))
-            icon_top_y = chest_y - (icon_height // 2)
-            output = overlay_icon(output, ally_icon, chest_x, icon_top_y, icon_width)
+            icon_top_y = chest_y - (icon_height // 2) + ally_y_adjust
 
-    return output
+            output = overlay_icon(output, ally_icon, cx, icon_top_y, icon_width)
 
+        return output
+
+def overlay_icon_centered(base_bgr, icon_bgra, center_x, center_y, target_width):
+    if icon_bgra is None:
+        return base_bgr
+
+    ih, iw = icon_bgra.shape[:2]
+    if iw == 0 or ih == 0:
+        return base_bgr
+
+    scale = target_width / float(iw)
+    target_height = max(1, int(ih * scale))
+
+    top_y = int(center_y - (target_height // 2))
+
+    return overlay_icon(base_bgr, icon_bgra, center_x, top_y, target_width)
+
+def draw_icon_backing_circle(image_bgr, center_x, center_y, radius, color=(15, 15, 15)):
+    output = image_bgr.copy()
+    cv2.circle(output, (int(center_x), int(center_y)), int(radius), color, -1)
+    return output    
+
+def add_icons_to_fixplus_minimap(image_bgr, enemy_data, ally_data, enemy_icon, ally_icon):
+    output = image_bgr.copy()
+
+    if enemy_data is None:
+        enemy_items = []
+    elif isinstance(enemy_data, list):
+        enemy_items = enemy_data
+    else:
+        enemy_items = [enemy_data]
+
+    if enemy_icon is not None:
+        for enemy in enemy_items:
+            cx, cy = enemy["cx"], enemy["cy"]
+            icon_width = max(28, int(max(enemy["w"], enemy["h"]) * 2.6))
+            output = overlay_icon_centered(output, enemy_icon, cx, cy, icon_width)
+
+    return output  
+
+def fill_largest_contour(mask):
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    if not contours:
+        return mask
+
+    largest = max(contours, key=cv2.contourArea)
+
+    filled = np.zeros_like(mask)
+    cv2.drawContours(filled, [largest], -1, 255, thickness=cv2.FILLED)
+    return filled
+
+def trim_bottom_of_mask(mask, trim_ratio=0.12):
+    trimmed = mask.copy()
+    h, w = trimmed.shape[:2]
+    cut_y = int(h * (1.0 - trim_ratio))
+    trimmed[cut_y:h, :] = 0
+    return trimmed    
 
 # =========================================================
 # HEALTH BAR HELPERS
@@ -521,6 +706,27 @@ def add_minimap_outlines(image_bgr, red_mask, green_mask):
     output = draw_mask_outline(output, green_mask, color=(255, 255, 255), thickness=MINIMAP_OUTLINE_THICKNESS_INNER, min_area=MINIMAP_MIN_CONTOUR_AREA)
     return output
 
+def recolour_minimap_blobs_separate(image_bgr, red_blobs, green_blobs, enemy_color_bgr=None, ally_color_bgr=None):
+    """
+    Recolour minimap dots selectively.
+    Pass None for a category if you want to leave it unchanged.
+    """
+    output = image_bgr.copy()
+
+    if enemy_color_bgr is not None:
+        for blob in red_blobs:
+            cx, cy = blob["cx"], blob["cy"]
+            radius = max(4, min(blob["w"], blob["h"]) // 2)
+            cv2.circle(output, (cx, cy), radius, enemy_color_bgr, -1)
+
+    if ally_color_bgr is not None:
+        for blob in green_blobs:
+            cx, cy = blob["cx"], blob["cy"]
+            radius = max(4, min(blob["w"], blob["h"]) // 2)
+            cv2.circle(output, (cx, cy), radius, ally_color_bgr, -1)
+
+    return output    
+
 
 # =========================================================
 # TEMPLATE: ENEMY / ALLY
@@ -529,7 +735,7 @@ def add_minimap_outlines(image_bgr, red_mask, green_mask):
 def process_enemy_ally(image_bgr):
     original = image_bgr.copy()
 
-    red_mask, green_mask = create_colour_masks(original)
+    red_mask, green_mask = create_colour_masks_enemy_ally_tritan(original)
 
     enemy_data = get_main_blob(red_mask, "Enemy")
     ally_data = get_main_blob(green_mask, "Ally")
@@ -540,6 +746,9 @@ def process_enemy_ally(image_bgr):
 
     enemy_icon = load_icon_with_alpha_fallback(ENEMY_ICON_PATH)
     ally_icon = load_icon_with_alpha_fallback(ALLY_ICON_PATH)
+
+    enemy_icon = tint_icon_bgra(enemy_icon, (255, 255, 255))
+    ally_icon = tint_icon_bgra(ally_icon, (255, 255, 255))
 
     fix_deutan = boost_image_appearance(apply_daltonize_bgr(original, "d"))
     fix_protan = boost_image_appearance(apply_daltonize_bgr(original, "p"))
@@ -560,7 +769,14 @@ def process_enemy_ally(image_bgr):
 
     fixplus_deutan = add_icons_to_fixplus(fix_deutan, enemy_data, ally_data, enemy_icon, ally_icon)
     fixplus_protan = add_icons_to_fixplus(fix_protan, enemy_data, ally_data, enemy_icon, ally_icon)
-    fixplus_tritan = add_icons_to_fixplus(fix_tritan, enemy_data, ally_data, enemy_icon, ally_icon)
+    fixplus_tritan = add_icons_to_fixplus(
+    fix_tritan,
+    enemy_data,
+    ally_data,
+    enemy_icon,
+    ally_icon,
+    ally_y_adjust=ALLY_ICON_Y_FINE_ADJUST_TRITAN
+)
 
     fixplusplus_deutan = add_outlines_fixplusplus(fixplus_deutan, [red_mask, green_mask])
     fixplusplus_protan = add_outlines_fixplusplus(fixplus_protan, [red_mask, green_mask])
@@ -591,6 +807,31 @@ def process_enemy_ally(image_bgr):
         "metadata": metadata
     }
 
+def get_marker_blobs(mask, min_area=40, max_area=600):
+
+    contours, _ = cv2.findContours(
+        mask,
+        cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE
+    )
+
+    blobs = []
+
+    for cnt in contours:
+
+        area = cv2.contourArea(cnt)
+
+        if min_area < area < max_area:
+
+            x, y, w, h = cv2.boundingRect(cnt)
+
+            blobs.append({
+                "bbox": (x, y, w, h),
+                "center": (x + w//2, y + h//2)
+            })
+
+    return blobs    
+
 
 # =========================================================
 # TEMPLATE: HEALTH BAR
@@ -599,10 +840,12 @@ def process_enemy_ally(image_bgr):
 def process_health_bar(image_bgr):
     original = image_bgr.copy()
 
-    red_mask, green_mask = create_colour_masks(original)
+    # Detect the two health bar regions for this poster:
+    # danger = red, safe = blue
+    danger_mask, safe_mask = create_colour_masks_healthbar_red_blue(original)
 
-    danger_data = get_main_blob(red_mask, "Danger")
-    safe_data = get_main_blob(green_mask, "Safe")
+    danger_data = get_main_blob(danger_mask, "Danger")
+    safe_data = get_main_blob(safe_mask, "Safe")
 
     detected = original.copy()
     draw_detection_info(detected, danger_data, (0, 255, 255), "Danger")
@@ -613,48 +856,44 @@ def process_health_bar(image_bgr):
     fix_tritan = boost_image_appearance(apply_daltonize_bgr(original, "t"))
 
     fix_deutan = recolour_detected_regions(
-        fix_deutan, red_mask, green_mask,
+        fix_deutan, danger_mask, safe_mask,
         HEALTH_DANGER_DEUTAN, HEALTH_SAFE_DEUTAN, REGION_BLEND_ALPHA
     )
+
     fix_protan = recolour_detected_regions(
-        fix_protan, red_mask, green_mask,
+        fix_protan, danger_mask, safe_mask,
         HEALTH_DANGER_PROTAN, HEALTH_SAFE_PROTAN, REGION_BLEND_ALPHA
     )
+
     fix_tritan = recolour_detected_regions(
-        fix_tritan, red_mask, green_mask,
+        fix_tritan, danger_mask, safe_mask,
         HEALTH_DANGER_TRITAN, HEALTH_SAFE_TRITAN, REGION_BLEND_ALPHA
     )
 
     fixplus_deutan = add_diagonal_hatching_to_mask(
-        fix_deutan, red_mask,
+        fix_deutan, danger_mask,
         line_color=(255, 255, 255),
         spacing=HEALTH_PATTERN_SPACING,
         thickness=HEALTH_PATTERN_THICKNESS
     )
-    fixplus_deutan = add_bar_divider(fixplus_deutan, danger_data, safe_data)
-    fixplus_deutan = draw_bar_label(fixplus_deutan, danger_data, "LOW")
 
     fixplus_protan = add_diagonal_hatching_to_mask(
-        fix_protan, red_mask,
+        fix_protan, danger_mask,
         line_color=(255, 255, 255),
         spacing=HEALTH_PATTERN_SPACING,
         thickness=HEALTH_PATTERN_THICKNESS
     )
-    fixplus_protan = add_bar_divider(fixplus_protan, danger_data, safe_data)
-    fixplus_protan = draw_bar_label(fixplus_protan, danger_data, "LOW")
 
     fixplus_tritan = add_diagonal_hatching_to_mask(
-        fix_tritan, red_mask,
+        fix_tritan, danger_mask,
         line_color=(255, 255, 255),
         spacing=HEALTH_PATTERN_SPACING,
         thickness=HEALTH_PATTERN_THICKNESS
     )
-    fixplus_tritan = add_bar_divider(fixplus_tritan, danger_data, safe_data)
-    fixplus_tritan = draw_bar_label(fixplus_tritan, danger_data, "LOW")
 
-    fixplusplus_deutan = add_outlines_fixplusplus(fixplus_deutan, [red_mask, green_mask])
-    fixplusplus_protan = add_outlines_fixplusplus(fixplus_protan, [red_mask, green_mask])
-    fixplusplus_tritan = add_outlines_fixplusplus(fixplus_tritan, [red_mask, green_mask])
+    fixplusplus_deutan = add_outlines_fixplusplus(fixplus_deutan, [danger_mask, safe_mask])
+    fixplusplus_protan = add_outlines_fixplusplus(fixplus_protan, [danger_mask, safe_mask])
+    fixplusplus_tritan = add_outlines_fixplusplus(fixplus_tritan, [danger_mask, safe_mask])
 
     metadata = {"template": "health_bar", "objects": []}
 
@@ -690,8 +929,8 @@ def process_minimap(image_bgr):
     """
     Minimap / radar logic:
     - Detect red and green dots as separate blobs.
-    - FIX: recolour dots to safer tones.
-    - FIX+: overlay the same warning icon on hostile red dots while leaving green allies as circles.
+    - FIX: recolour each dot to safer tones, keeping them tight and small.
+    - FIX+: overlay a solid minimap warning icon on hostile red dots only.
     - FIX++: add outlines to improve contrast.
     """
     original = image_bgr.copy()
@@ -705,32 +944,60 @@ def process_minimap(image_bgr):
     detected = draw_minimap_detection(detected, red_blobs, (0, 255, 255), "E")
     detected = draw_minimap_detection(detected, green_blobs, (255, 255, 0), "A")
 
-    # Use the same warning icon as enemy/ally, but tint it bright for the radar
-    warning_icon = load_icon_with_alpha_fallback(ENEMY_ICON_PATH)
-    warning_icon = tint_icon_bgra(warning_icon, (0, 220, 255))  # bright yellow-orange
+    # Load minimap-specific solid icon
+    minimap_icon = load_icon_with_alpha_fallback(MINIMAP_ICON_PATH)
 
-    # FIX
-    fix_deutan = boost_image_appearance(apply_daltonize_bgr(original, "d"))
-    fix_protan = boost_image_appearance(apply_daltonize_bgr(original, "p"))
-    fix_tritan = boost_image_appearance(apply_daltonize_bgr(original, "t"))
-
-    fix_deutan = recolour_detected_regions(
-        fix_deutan, red_mask, green_mask,
-        MINIMAP_ENEMY_DEUTAN, MINIMAP_ALLY_DEUTAN, REGION_BLEND_ALPHA
+    # FIX = recolour both enemy and ally dots
+    fix_deutan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        MINIMAP_ENEMY_DEUTAN, MINIMAP_ALLY_DEUTAN
     )
-    fix_protan = recolour_detected_regions(
-        fix_protan, red_mask, green_mask,
-        MINIMAP_ENEMY_PROTAN, MINIMAP_ALLY_PROTAN, REGION_BLEND_ALPHA
+    fix_protan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        MINIMAP_ENEMY_PROTAN, MINIMAP_ALLY_PROTAN
     )
-    fix_tritan = recolour_detected_regions(
-        fix_tritan, red_mask, green_mask,
-        MINIMAP_ENEMY_TRITAN, MINIMAP_ALLY_TRITAN, REGION_BLEND_ALPHA
+    fix_tritan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        MINIMAP_ENEMY_TRITAN, MINIMAP_ALLY_TRITAN
     )
 
-    # FIX+
-    fixplus_deutan = overlay_warning_icons_on_red_blobs(fix_deutan, red_blobs, warning_icon)
-    fixplus_protan = overlay_warning_icons_on_red_blobs(fix_protan, red_blobs, warning_icon)
-    fixplus_tritan = overlay_warning_icons_on_red_blobs(fix_tritan, red_blobs, warning_icon)
+    # FIX+ = recolour ally dots only, leave enemy dots unchanged, then overlay enemy warning icons
+    fixplus_base_deutan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        None, MINIMAP_ALLY_DEUTAN
+    )
+    fixplus_base_protan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        None, MINIMAP_ALLY_PROTAN
+    )
+    fixplus_base_tritan = recolour_minimap_blobs_separate(
+        original, red_blobs, green_blobs,
+        None, MINIMAP_ALLY_TRITAN
+    )
+
+    fixplus_deutan = add_icons_to_fixplus_minimap(
+        fixplus_base_deutan,
+        red_blobs,
+        None,
+        minimap_icon,
+        None
+    )
+
+    fixplus_protan = add_icons_to_fixplus_minimap(
+        fixplus_base_protan,
+        red_blobs,
+        None,
+        minimap_icon,
+        None
+    )
+
+    fixplus_tritan = add_icons_to_fixplus_minimap(
+        fixplus_base_tritan,
+        red_blobs,
+        None,
+        minimap_icon,
+        None
+    )
 
     # FIX++
     fixplusplus_deutan = add_minimap_outlines(fixplus_deutan, red_mask, green_mask)
