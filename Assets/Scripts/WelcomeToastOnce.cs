@@ -23,10 +23,10 @@ public class WelcomeToastOnce : MonoBehaviour
     [Header("Message")]
     [TextArea(2, 10)]
     public string message =
-        "Welcome to the VR Accessibility Gallery!\n\n" +
-        "Use the LEFT WRIST MENU to change CVD simulation.\n" +
-        "Use the BUTTONS ABOVE EACH POSTER to switch between Original, Fix, and Fix+.\n\n" +
-        "Compare how each design reads under different vision conditions.";
+        "Welcome to the VR Accessibility Toolkit.\n\n" +
+        "Use the LEFT controller button to open the wrist menu and switch between Normal, Protanopia, Deuteranopia, and Tritanopia simulation modes.\n\n" +
+        "Use the buttons above each poster to compare the Original design, Apply Fix, and Apply Fix+ versions.\n\n" +
+        "Point with the RIGHT-hand ray to select UI elements.";
 
     [Header("Dismiss (keyboard for testing)")]
     public KeyCode dismissKey = KeyCode.Return;
