@@ -2025,6 +2025,7 @@ GameObject:
   - component: {fileID: 178081504}
   - component: {fileID: 178081503}
   - component: {fileID: 178081502}
+  - component: {fileID: 178081506}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2259,6 +2260,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &178081506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178081500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d4fddd6fe7c8b4dafc05862dc1b12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugURPActiveRenderer
 --- !u!1 &208178062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758423527188247893, guid: 1392f805216c47742996d4742c80721c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5939,10 +5952,6 @@ PrefabInstance:
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_Name
       value: Left Hand Model
-      objectReference: {fileID: 0}
-    - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 109434732395451517, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10006,7 +10015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4283425761326543017, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10368,10 +10377,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Model
       objectReference: {fileID: 0}
-    - target: {fileID: 5686134208185362930, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10729,7 +10734,7 @@ Transform:
   m_GameObject: {fileID: 1105656091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12359,11 +12364,11 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 2.870924, z: 0}
   m_Size: 9.942341
-  m_FadeMode: 0
+  m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.04206688
+  - screenRelativeHeight: 0.15645604
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 296790177}
@@ -14203,11 +14208,11 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 2.870924, z: 0}
   m_Size: 9.942341
-  m_FadeMode: 0
+  m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.025216656
+  - screenRelativeHeight: 0.0994825
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1372786314}
@@ -15054,7 +15059,7 @@ RectTransform:
   m_GameObject: {fileID: 1731251757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.64}
-  m_LocalScale: {x: 0.18353313, y: 0.24246562, z: 0.18353313}
+  m_LocalScale: {x: 0.18353313, y: 0.18353313, z: 0.18353313}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1476415125}
@@ -17097,7 +17102,7 @@ RectTransform:
   m_GameObject: {fileID: 1971619611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.64}
-  m_LocalScale: {x: 0.18353313, y: 0.24246562, z: 0.18353313}
+  m_LocalScale: {x: 0.18353313, y: 0.18353313, z: 0.18353313}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 169245721}
