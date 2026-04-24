@@ -222,9 +222,13 @@ def get_all_blobs(mask, label, min_area=MINIMAP_MIN_CONTOUR_AREA):
 
 
 def draw_minimap_detection(img, blobs, color, label_prefix):
+    # Draw circles and labels for each blob on the image
     output = img
+    # Process each blob in the list
     for i, b in enumerate(blobs):
+        # Draw circle at blob center with radius based on blob width
         cv2.circle(output, (b["cx"], b["cy"]), max(4, b["w"] // 2), color, 2)
+        # Draw label with blob index (keep on-screen)
         cv2.putText(
             output,
             f"{label_prefix}{i+1}",
@@ -239,14 +243,18 @@ def draw_minimap_detection(img, blobs, color, label_prefix):
 
 
 def get_marker_blobs(mask, min_area=40, max_area=600):
+    # Find all contours, filter by area range, return marker blobs with bbox and center
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     blobs = []
 
+    # Process each contour to find marker-sized objects
     for cnt in contours:
         area = cv2.contourArea(cnt)
 
+        # Filter by area (markers should be small to mid-sized)
         if min_area < area < max_area:
             x, y, w, h = cv2.boundingRect(cnt)
+            # Store bounding box and center coordinates
             blobs.append({
                 "bbox": (x, y, w, h),
                 "center": (x + w // 2, y + h // 2)

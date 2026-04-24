@@ -13,7 +13,7 @@ scopes = {
 	"picker_visibility_flags.00000000" = "0"
 	"picker_item_size.00000000" = "32"
 	"picker_inspector.00000000" = "0"
-	"last_search.66F56946" = "qual"
+	"last_search.66F56946" = "fx"
 	"OpenInspectorPreview.66F56946" = "0"
 	"currentGroup.66F56946" = "all"
 }
@@ -72,6 +72,8 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"f"
+	"mi"
 	"c"
 	"film"
 	"press "
@@ -90,8 +92,6 @@ recentSearches = [
 	"xri right lo"
 	"xri right inter"
 	"xri right in"
-	"xri left inter"
-	"xri lef"
 ]
 searchItemFavorites = [
 ]
